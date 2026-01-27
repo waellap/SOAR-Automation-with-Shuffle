@@ -55,7 +55,7 @@ Wazuh, Shuffle, TheHive, Internet Threat Intelligence APIs, and Email Notificati
 ##  Lab Photo Demonstration.
 
 ### Steps
-1- Installation
+- Installation
 - Installing Windows 10, which will be the agent, then downloading  and configuring Sysmon and Wazuh agent within it.
 <img src="https://imgur.com/e2S5h3h.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <img src="https://imgur.com/CIJr26w.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
@@ -72,67 +72,94 @@ Wazuh, Shuffle, TheHive, Internet Threat Intelligence APIs, and Email Notificati
 <br />
 <br />
 
+- Workflow
+- Send the Mimikatz alert to shuffle.
+- Shuffle receives the alerts and extract SHA256 hash from the file,
+- checks the reputation score via VirusTotal,
+- and lastly send an email to the analyst to investigate.  
 
--Creating the HTTP.Server.
+-Creating My Workflow.
+I open shuffle.io, I click on triggers, and I add a webhook.
 
-<img src="https://imgur.com/8LWykK9.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+
+<img src="https://imgur.com/hQKtvH4.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/Jwz8nw8.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
 <br />
 <br />
 
 
--Turning down the malware detector in Windows Defender.
+-Then, within the Wazuh manager, I connected it to shuffle under nano/var/ossec/etc/ossec.conf and added the rule Id.
 
 
-<img src="https://imgur.com/zxRYS7f.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/hnMd5Pt.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <br />
 <br />
 
 
--Connecting to the server and choosing the exe file, aka (malware folder).
+-After connecting it, I restart Wazuh and generate the Mimikatz telemetry.
 
 
-<img src="https://imgur.com/loAu4PC.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/ES0EEWP.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <br />
 <br />
 
 
--Download the exe file (Resume.pdf.exe) and run it
+-Here are some events.
 
 
-<img src="https://imgur.com/bcXDOsy.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/q3pjAAv.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/B1vHkUw.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <br />
 <br />
 
 
--After running the malware folder, checking it through the cmd by running Netstat -anob. Then The 
-connection is established
+-I opened ChatGPT, created Regex and pasted it.
 
-<img src="https://imgur.com/L6SZByZ.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-<br />
-<br />
-
-
-
--Ingesting the sysmon and creating an index called endpoint 
--Setting->index->new index-> endpoint->Apps->Search and reporting->index endpoint.
-
-
-<img src="https://imgur.com/Fp16zSS.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/IPDCpVe.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/ij8NcFd.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/fztgPd8.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <br />
 <br />
 
 
 
--Searching for the malware name (Resume.pdf.exe), I found 13 events.
+-I created an account in VirusTotal and added it to my shuffle scan SHA256 hash.
 
-<img src="https://imgur.com/yd4OxpT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+<img src="https://imgur.com/sfHRq8X.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/6PzBejU.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <br />
 <br />
 
 
--I use process guid in the search menu and found 5 events. I clean up the query and looked into the statistics.
 
+-Then connect TheHive to get the alert. I created a new organization and users for that organization to authenticate with Shuffle, 
+and the alert will generate in TheHive. Also, I modified my cloud firewall.
 
-<img src="https://imgur.com/G9rWjyY.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/BsTOhja.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/HPCIW08.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+<img src="https://imgur.com/5GPTKrB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
 <br />
 <br />
+
+
+-I add the email in which the alert will be sent.
+
+
+<img src="https://imgur.com/H6dflNh.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://imgur.com/F0bH26U.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+<br />
+<br />
+
+-Lastly, I added the mitigation technique from MITRE ATT&CK. The alert number is "T1003.".
+
+
+<img src="https://imgur.com/8rhFOou.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<br />
+<br />
+
